@@ -5,12 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import velog.sideProject.controller.dto.DraftPostDTO;
-import velog.sideProject.controller.dto.DraftPostWithTagDTO;
-import velog.sideProject.controller.dto.DraftTagDTO;
 import velog.sideProject.entity.drfatpost.DraftPost;
 import velog.sideProject.entity.drfatpost.DraftTag;
 import velog.sideProject.repository.draftpost.jpa.DraftPostRepository;
-import velog.sideProject.repository.draftpost.jpa.DraftTagRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,23 +21,24 @@ public class MyPageService {
     private final DraftPostRepository draftPostRepository;
 
     /** select DraftPost List with member_id**/
-    public List<DraftPostWithTagDTO> getDraftPostWithId(Long member_id) {
-        List<DraftPostWithTagDTO> postInfoList = new ArrayList<>();
+    public List<DraftPostDTO> getDraftPostWithId(Long member_id) {
 
         List<DraftPost> draftPosts = draftPostRepository.findByMember_MemberId(member_id);
 
-        for (DraftPost draftPost : draftPosts) {
+        // draftPost 마다 태그 리스트 조회후 DraftPostWithTagDTO로 묶어서 postInfoList 생성
+        List<DraftPostDTO> draftPostDTOList = new ArrayList<>();
 
+        for (DraftPost draftPost : draftPosts) {
             List<DraftTag> draftTagList = draftPostRepository.findTagStringsByPostId(draftPost.getDraftPostId());
 
-            List<DraftTagDTO> draftPostDTOList = draftTagList.stream()
-                .map(DraftTagDTO::toDTO)
-                .toList();
+            List<String> tagNames = draftTagList.stream()
+                    .map(DraftTag::getDraftTagString)
+                    .toList();
 
-            postInfoList.add(new DraftPostWithTagDTO(DraftPostDTO.toDTO(draftPost), draftPostDTOList));
+            draftPostDTOList.add(DraftPostDTO.toDTO(draftPost, tagNames));
         }
 
-        return postInfoList;
+        return draftPostDTOList;
     }
 
 
