@@ -8,6 +8,7 @@ import velog.sideProject.entity.drfatpost.DraftPost;
 import velog.sideProject.entity.drfatpost.DraftTag;
 
 import java.util.List;
+import java.util.Optional;
 
 //select draft_tag_string
 //        from draft_tag dt
@@ -29,4 +30,6 @@ public interface DraftPostRepository extends JpaRepository<DraftPost, Long> {
             "on dpdt.draft_post_id = dp.draft_post_id " +
             "where dp.draft_post_id = :postId", nativeQuery = true)
     List<DraftTag> findTagStringsByPostId(@Param("postId") Long postId);
+
+    Optional<DraftPost> findByDraftPostIdAndMember_MemberId(Long draftPostId, Long memberId);
 }
