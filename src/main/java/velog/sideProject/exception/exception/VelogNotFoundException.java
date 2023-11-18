@@ -1,5 +1,8 @@
 package velog.sideProject.exception.exception;
 
+/**
+ * 조회 되어야 하지만 조회되지 않았을 때 사용
+ */
 public class VelogNotFoundException extends RuntimeException{
 
     public VelogNotFoundException() {
