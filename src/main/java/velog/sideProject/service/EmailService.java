@@ -6,6 +6,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ import java.io.UnsupportedEncodingException;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
+
+    @Value("${spring.mail.username}")
+    private String AdminEmail;
+
     @Autowired
     private  JavaMailSender emailsender;
 
@@ -42,7 +47,7 @@ public class EmailService {
         msgg += "</div>";
         message.setText(msgg, "utf-8", "html");// 내용, charset 타입, subtype
         // 보내는 사람의 이메일 주소, 보내는 사람 이름
-        message.setFrom(new InternetAddress("eoeo777755@naver.com", "TEST_ADMIN"));// 보내는 사람
+        message.setFrom(new InternetAddress(AdminEmail, "TEST_ADMIN"));// 보내는 사람
 
         return message;
     }
