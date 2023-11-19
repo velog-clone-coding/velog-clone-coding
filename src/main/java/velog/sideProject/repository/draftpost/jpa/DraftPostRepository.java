@@ -22,14 +22,5 @@ public interface DraftPostRepository extends JpaRepository<DraftPost, Long> {
 
     List<DraftPost> findByMember_MemberId(Long userId);
 
-    @Query(value = "select draft_tag_string " +
-            "from draft_tag dt " +
-            "join draft_post_draft_tag dpdt " +
-            "on dt.draft_tag_id = dpdt.draft_tag_id " +
-            "join draft_post dp " +
-            "on dpdt.draft_post_id = dp.draft_post_id " +
-            "where dp.draft_post_id = :postId", nativeQuery = true)
-    List<DraftTag> findTagStringsByPostId(@Param("postId") Long postId);
-
     Optional<DraftPost> findByDraftPostIdAndMember_MemberId(Long draftPostId, Long memberId);
 }
