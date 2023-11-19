@@ -23,4 +23,6 @@ public interface DraftPostRepository extends JpaRepository<DraftPost, Long> {
     List<DraftPost> findByMember_MemberId(Long userId);
 
     Optional<DraftPost> findByDraftPostIdAndMember_MemberId(Long draftPostId, Long memberId);
+
+    Long deleteByDraftPostIdAndMember_MemberId(Long draftPostId,Long memberId);
 }

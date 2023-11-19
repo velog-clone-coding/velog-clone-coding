@@ -34,7 +34,7 @@ public class DraftPost {
     @Column(name = "draft_post_modified_at", nullable = false)
     private LocalDateTime draftPostModifiedAt;
 
-    @OneToMany(mappedBy = "draftPost")
+    @OneToMany(mappedBy = "draftPost", cascade = CascadeType.REMOVE)
     private List<DraftTag> draftTagList = new ArrayList<>();
 
     @ManyToOne

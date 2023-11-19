@@ -44,6 +44,13 @@ public class  MyPageService {
         });
     }
 
+    /**
+     * delete DraftPost with member_id & post_id
+     */
+    public Long deleteDraftPostWithPostIdMemberId(Long postId, Long memberId) {
+        return draftPostRepository.deleteByDraftPostIdAndMember_MemberId(postId, memberId);
+    }
+
 
     // DraftPost에 맞는 tag 찾는 메서드
     private List<String> getDraftTagListWithDraftPostId(DraftPost draftPost) {
