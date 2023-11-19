@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -23,9 +25,11 @@ public class Member {
     @Column(name = "member_name", nullable = false)
     private String memberName;
 
+    @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "modified_at", nullable = false)
     private LocalDateTime modifiedAt;
 
@@ -69,6 +73,11 @@ public class Member {
     //@Column(name = "autohorityKey", nullable = false)
     private Authority autohority;
 
+
+    /**
+     * 테스트 용
+     * TODO: jwt로 유저 식별 이후 삭제 필요
+     * **/
 
     @Builder
     public Member(Long memberId) {
