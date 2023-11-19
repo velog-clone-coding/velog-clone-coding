@@ -16,7 +16,7 @@ public class globalControllerAdvice {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResult> velogNotFoundExceptionHandler(VelogNotFoundException e) {
-        log.info("velogNotFoundExceptionHandler 동작");
+        log.info("velogNotFoundExceptionHandler");
         ErrorResult errorResult = new ErrorResult(HttpStatus.BAD_REQUEST.toString(), e.getMessage(), getApiName());
         return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
     }

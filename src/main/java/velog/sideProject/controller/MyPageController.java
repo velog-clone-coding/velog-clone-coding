@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import velog.sideProject.controller.dto.DraftPostDTO;
+import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.exception.exception.VelogNotFoundException;
 import velog.sideProject.service.MyPageService;
 
@@ -24,21 +24,20 @@ public class MyPageController {
     /** TODO: jwt에서 멤버 정보 가져오는걸로 변경 필요 **/
     Long memberId = 1L;
 
-    /**
-     * select DraftPost with member_id
-     **/
+    /** select DraftPostList with member_id **/
     @GetMapping("/saves")
-    public List<DraftPostDTO> getDraftPostList() {
+    public List<SearchDraftPostDTO> getDraftPostList() {
         log.info("getDraftPostList request");
 
         return myPageService.getDraftPostListWithId(memberId);
 
     }
 
+    /** select DraftPost with postId **/
     @GetMapping("/write")
-    public DraftPostDTO getDraftPost(@RequestParam Long postId){
+    public SearchDraftPostDTO getDraftPost(@RequestParam Long postId){
         log.info("getDraftPost request");
-        Optional<DraftPostDTO> draftPostDTO = myPageService.getDraftPostWithPostIdMemberId(postId, memberId);
+        Optional<SearchDraftPostDTO> draftPostDTO = myPageService.getDraftPostWithPostIdMemberId(postId, memberId);
 
         return draftPostDTO.orElseThrow(() -> new VelogNotFoundException("DraftPost not found with postID: " + postId + ", memberId: " + memberId));
 

@@ -5,13 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import velog.sideProject.entity.Member;
 import velog.sideProject.entity.drfatpost.DraftPost;
+import velog.sideProject.entity.drfatpost.DraftTag;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor
-public class DraftPostDTO {
+public class SearchDraftPostDTO {
 
     private final String typeName = "draftPostDTO";
     private Long memberId;
@@ -22,7 +25,7 @@ public class DraftPostDTO {
     private List<String> tagList;
 
     @Builder
-    public DraftPostDTO(Long memberId, Long postId, String title, String content, LocalDateTime agoDate, List<String> tagList) {
+    public SearchDraftPostDTO(Long memberId, Long postId, String title, String content, LocalDateTime agoDate, List<String> tagList) {
         this.memberId = memberId;
         this.postId = postId;
         this.title = title;
@@ -31,19 +34,8 @@ public class DraftPostDTO {
         this.tagList = tagList;
     }
 
-    /** TODO: memberId 이렇게 넣는게 맞는지 확인필요 **/
-    public DraftPost toEntity(){
-        return DraftPost.builder()
-                .draftPostTitle(title)
-                .draftPostContent(content)
-                .draftPostModifiedAt(agoDate)
-                .member(Member.builder().memberId(memberId).build())
-                .build();
-
-    }
-
-    public static DraftPostDTO toDTO(DraftPost draftPost, List<String> tagList) {
-        return DraftPostDTO.builder()
+    public static SearchDraftPostDTO toDTO(DraftPost draftPost, List<String> tagList) {
+        return SearchDraftPostDTO.builder()
                 .memberId(draftPost.getMember().getMemberId())
                 .postId(draftPost.getDraftPostId())
                 .title(draftPost.getDraftPostTitle())
@@ -52,4 +44,23 @@ public class DraftPostDTO {
                 .tagList(tagList)
                 .build();
     }
+
+//    public DraftPost toDraftPostEntity(Member member){
+//        return DraftPost.builder()
+//                .draftPostTitle(title)
+//                .draftPostContent(content)
+//                .draftPostModifiedAt(agoDate)
+//                .member(member)
+//                .build();
+//
+//    }
+//
+//    public List<DraftTag> toDraftTagEntity(DraftPost draftPost) {
+//        return Optional.ofNullable(tagList).orElse(Collections.emptyList())
+//                .stream()
+//                .map(tagString -> DraftTag.builder()
+//                        .draftTagString(tagString)
+//                        .draftPost(draftPost).build())
+//                .toList();
+//    }
 }
