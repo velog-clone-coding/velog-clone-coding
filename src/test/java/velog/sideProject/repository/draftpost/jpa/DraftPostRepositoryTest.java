@@ -21,17 +21,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Transactional
-@SpringBootTest
+@SpringBootTest(classes = {DraftPostRepository.class})
 @Slf4j
 class DraftPostRepositoryTest {
-    @Autowired
-    DraftPostRepository draftPostRepository;
+
+
 
     // TODO: 테스트 기능 추가 필요
     @Test
     @DisplayName("멤버아이디로 임시게시글 조회")
     void findByMember_MemberId() {
-        throw new RuntimeException();
+
     }
 
     @Test

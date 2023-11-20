@@ -43,10 +43,12 @@ public class DraftPost {
     private Member member;
 
     @Builder
-    public DraftPost(String draftPostTitle, String draftPostContent, LocalDateTime draftPostModifiedAt, Member member) {
+    public DraftPost(Long draftPostId, String draftPostTitle, String draftPostContent, LocalDateTime draftPostModifiedAt, List<DraftTag> draftTagList, Member member) {
+        this.draftPostId = draftPostId;
         this.draftPostTitle = draftPostTitle;
         this.draftPostContent = draftPostContent;
         this.draftPostModifiedAt = draftPostModifiedAt;
+        this.draftTagList = draftTagList;
         this.member = member;
     }
 }

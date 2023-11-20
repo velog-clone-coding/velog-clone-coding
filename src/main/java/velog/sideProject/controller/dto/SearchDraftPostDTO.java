@@ -1,6 +1,7 @@
 package velog.sideProject.controller.dto;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import velog.sideProject.entity.Member;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class SearchDraftPostDTO {
 
@@ -45,6 +47,18 @@ public class SearchDraftPostDTO {
                 .build();
     }
 
+    @Override
+    public String toString() {
+        return "SearchDraftPostDTO{" +
+                "typeName='" + typeName + '\'' +
+                ", memberId=" + memberId +
+                ", postId=" + postId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", agoDate=" + agoDate +
+                ", tagList=" + tagList +
+                '}';
+    }
 //    public DraftPost toDraftPostEntity(Member member){
 //        return DraftPost.builder()
 //                .draftPostTitle(title)
