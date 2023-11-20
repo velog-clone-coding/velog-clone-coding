@@ -9,11 +9,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.transaction.annotation.Transactional;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.entity.drfatpost.DraftPost;
 import velog.sideProject.entity.drfatpost.DraftTag;
-import velog.sideProject.config.initData.DraftPostInitData;
+import velog.sideProject.common.initData.DraftPostInitData;
 import velog.sideProject.repository.draftpost.jpa.DraftPostRepository;
 
 import java.util.List;

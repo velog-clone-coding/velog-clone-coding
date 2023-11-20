@@ -1,4 +1,4 @@
-package velog.sideProject.config.initData;
+package velog.sideProject.common.initData;
 
 import lombok.Getter;
 import velog.sideProject.controller.dto.CreateDraftPostDTO;

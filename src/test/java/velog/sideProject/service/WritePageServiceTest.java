@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import velog.sideProject.config.initData.DraftPostInitData;
+import velog.sideProject.common.initData.DraftPostInitData;
 import velog.sideProject.controller.dto.CreateDraftPostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.entity.Member;
@@ -20,8 +20,6 @@ import velog.sideProject.repository.draftpost.jpa.DraftTagRepository;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest(classes = {WritePageService.class, DraftPostRepository.class, DraftTagRepository.class})
