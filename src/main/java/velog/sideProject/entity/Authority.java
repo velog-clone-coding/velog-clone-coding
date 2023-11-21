@@ -1,8 +1,10 @@
 package velog.sideProject.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Authority {
 
     @Id

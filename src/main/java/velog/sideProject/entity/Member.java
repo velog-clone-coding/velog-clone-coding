@@ -83,4 +83,27 @@ public class Member {
     public Member(Long memberId) {
         this.memberId = memberId;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberId=" + memberId +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", createdAt=" + createdAt +
+                ", modifiedAt=" + modifiedAt +
+                ", shortIntro='" + shortIntro + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", socialEmail='" + socialEmail + '\'' +
+                ", socialGithub='" + socialGithub + '\'' +
+                ", socialTwitter='" + socialTwitter + '\'' +
+                ", socialFacebook='" + socialFacebook + '\'' +
+                ", socialWebsite='" + socialWebsite + '\'' +
+                ", velogTitle='" + velogTitle + '\'' +
+                ", replyAlert=" + replyAlert +
+                ", updateAlert=" + updateAlert +
+                ", file=" + file +
+                ", autohority=" + autohority +
+                '}';
+    }
 }
