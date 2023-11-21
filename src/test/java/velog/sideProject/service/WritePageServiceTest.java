@@ -21,8 +21,6 @@ import velog.sideProject.repository.draftpost.jpa.DraftTagRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @Slf4j
 @SpringBootTest(classes = {WritePageService.class, DraftPostRepository.class, DraftTagRepository.class})
 class WritePageServiceTest {
