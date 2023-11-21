@@ -5,10 +5,12 @@ import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Embeddable
 @NoArgsConstructor
 @EqualsAndHashCode
-public class PostLikesPk {
+public class PostLikesPk implements Serializable {
 
     @Column(name = "post_id")
     private Long postId;
