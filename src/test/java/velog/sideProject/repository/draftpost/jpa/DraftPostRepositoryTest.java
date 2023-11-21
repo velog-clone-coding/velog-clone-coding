@@ -31,7 +31,7 @@ class DraftPostRepositoryTest {
     @Test
     @DisplayName("멤버아이디로 임시게시글 조회")
     void findByMember_MemberId() {
-
+        throw new RuntimeException();
     }
 
     @Test

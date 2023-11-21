@@ -9,30 +9,49 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
 import velog.sideProject.common.initData.DraftPostInitData;
 import velog.sideProject.controller.dto.CreateDraftPostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.entity.Member;
 import velog.sideProject.entity.drfatpost.DraftPost;
 import velog.sideProject.entity.drfatpost.DraftTag;
+import velog.sideProject.repository.FileRepository;
 import velog.sideProject.repository.draftpost.jpa.DraftPostRepository;
 import velog.sideProject.repository.draftpost.jpa.DraftTagRepository;
+import velog.sideProject.repository.member.MemberRepository;
+import velog.sideProject.repository.post.jpa.PostRepository;
+import velog.sideProject.repository.post.jpa.Post_TagRepository;
+import velog.sideProject.repository.post.jpa.TagRepository;
+import velog.sideProject.repository.series.jpa.SeriesRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@SpringBootTest(classes = {WritePageService.class, DraftPostRepository.class, DraftTagRepository.class})
+@SpringBootTest
+@ComponentScan(basePackages = "velog.sideProject.repository")
 class WritePageServiceTest {
 
     @Autowired
     WritePageService writePageService;
-
     @MockBean
     DraftPostRepository draftPostRepository;
-
     @MockBean
-    DraftTagRepository draftTagRepository;
+    private DraftTagRepository draftTagRepository;
+    @MockBean
+    private PostRepository postRepository;
+    @MockBean
+    private TagRepository tagRepository;
+    @MockBean
+    private Post_TagRepository postTagRepository;
+    @MockBean
+    private MemberRepository memberRepository;
+    @MockBean
+    private FileRepository fileRepository;
+    @MockBean
+    private SeriesRepository seriesRepository;
+
 
     DraftPostInitData draftPostInitData = new DraftPostInitData();
 

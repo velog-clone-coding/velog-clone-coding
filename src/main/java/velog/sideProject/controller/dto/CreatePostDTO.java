@@ -1,6 +1,5 @@
 package velog.sideProject.controller.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import velog.sideProject.entity.File;
 import velog.sideProject.entity.Member;
