@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charSet="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+<h2>로그인</h2>
+<form id="loginForm" method="post">
+    <label htmlFor="email">이메일:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <input type="submit" value="로그인">
+</form>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // 기본 이벤트인 submit 동작을 중지시킵니다.
+
+        const email = document.getElementById('email').value;
+
+        // 이메일, 비밀번호를 가지고 객체를 생성합니다.
+        const data = {
+            email: email
+        };
+
+        // 서버로 POST 요청을 보냅니다.
+        fetch('/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('로그인에 실패하였습니다.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 토큰을 쿠키에 저장합니다.
+                document.cookie = `token=${data}; path=/;`;
+
+                console.log('로그인 성공:', data);
+
+                // 로그인 성공 후에 할 일을 정의합니다.
+                // 예: 페이지 이동, 토큰 저장 등
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+                // 에러 처리 방법을 정의합니다.
+                // 예: 에러 메시지 표시, 로그인 실패 알림 등
+            });
+    });
+</script>
+</body>
+</html>
