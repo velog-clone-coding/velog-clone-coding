@@ -7,6 +7,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import velog.sideProject.global.entity.Authority;
 import velog.sideProject.entity.Member;
+import velog.sideProject.entity.Member;
+import velog.sideProject.global.entity.Authority;
 
 @Getter
 @AllArgsConstructor

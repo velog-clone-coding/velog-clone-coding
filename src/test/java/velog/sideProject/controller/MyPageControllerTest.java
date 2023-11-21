@@ -24,6 +24,7 @@ import velog.sideProject.config.initData.DraftPostInitData;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.service.MyPageService;
 
+
 import java.util.List;
 import java.util.Optional;
 

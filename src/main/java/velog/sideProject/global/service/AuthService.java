@@ -6,15 +6,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import velog.sideProject.entity.Member;
 import velog.sideProject.global.dto.MemberRequestDto;
 import velog.sideProject.global.dto.MemberResponseDto;
 import velog.sideProject.global.dto.TokenDto;
 import velog.sideProject.global.dto.TokenRequestDto;
-import velog.sideProject.entity.Member;
 import velog.sideProject.global.entity.RefreshToken;
 import velog.sideProject.global.jwt.TokenProvider;
-import velog.sideProject.repository.member.MemberRepository;
 import velog.sideProject.global.repository.RefreshTokenRepository;
+import velog.sideProject.repository.member.MemberRepository;
 import velog.sideProject.service.EmailService;
 
 

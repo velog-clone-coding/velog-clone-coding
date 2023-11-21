@@ -1,7 +1,7 @@
 package velog.sideProject.global.repository;
 
-import velog.sideProject.global.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
+import velog.sideProject.global.entity.RefreshToken;
 
 import java.util.Optional;
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
