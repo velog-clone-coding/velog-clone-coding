@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import velog.sideProject.global.entity.Authority;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -28,13 +28,10 @@ public class Member {
     @Column(name = "velog_title", length = 100, nullable = false)
     private String velogTitle;
 
-//    @Column(name = "member_password", nullable = false)
-//    private String password;
-
     @Column(name = "introduction", length = 500)
     private String introduction;
 
-    @CreationTimestamp
+    @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -69,6 +66,11 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    /**
+     * 테스트 용
+     * TODO: jwt로 유저 식별 이후 삭제 필요
+     * **/
+
     @Builder
     public Member(String memberEmail, String memberName, String velogTitle, Authority authority) {
         this.memberEmail = memberEmail;
@@ -76,10 +78,4 @@ public class Member {
         this.velogTitle = velogTitle;
         this.authority = authority;
     }
-//    @Builder
-//    public Member(String email, String password, Authority authority) {
-//        this.memberEmail = email;
-//        this.password = password;
-//        this.authority = authority;
-//    }
 }

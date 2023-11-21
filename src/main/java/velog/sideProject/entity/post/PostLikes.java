@@ -1,6 +1,7 @@
 package velog.sideProject.entity.post;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
 import velog.sideProject.entity.Member;
 import velog.sideProject.entity.post.idclass.PostLikesPk;
 import velog.sideProject.entity.post.idclass.Post_TagPK;
@@ -26,6 +27,7 @@ public class PostLikes {
 //    @Column(name = "member_id")
     private Member member;
 
+    @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime cratedAt;
 

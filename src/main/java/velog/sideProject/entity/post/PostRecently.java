@@ -1,6 +1,8 @@
 package velog.sideProject.entity.post;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import velog.sideProject.entity.Member;
 import velog.sideProject.entity.post.idclass.PostRecentlyPk;
 
@@ -25,6 +27,8 @@ public class PostRecently {
 //    @Column(name = "member_id")
     private Member member;
 
+    @CreatedDate
+    @UpdateTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime cratedAt;
 

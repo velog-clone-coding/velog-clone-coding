@@ -18,6 +18,10 @@ import java.io.UnsupportedEncodingException;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
+
+    @Value("${spring.mail.username}")
+    private String AdminEmail;
+
     @Autowired
     private  JavaMailSender emailsender;
 

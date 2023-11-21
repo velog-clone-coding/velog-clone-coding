@@ -1,6 +1,8 @@
 package velog.sideProject.entity.post;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import velog.sideProject.entity.File;
 import velog.sideProject.entity.Member;
 import velog.sideProject.entity.series.Series;
@@ -27,9 +29,11 @@ public class Post {
     @Column(name = "post_count", nullable = false)
     private int postCount;
 
+    @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "modified_at", nullable = false)
     private LocalDateTime modifiedAt;
 

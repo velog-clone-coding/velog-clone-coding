@@ -1,13 +1,13 @@
 package velog.sideProject.controller.dto;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import velog.sideProject.entity.Member;
-import velog.sideProject.entity.drfatpost.DraftPost;
 import velog.sideProject.entity.drfatpost.DraftTag;
 
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class DraftTagDTO {
 

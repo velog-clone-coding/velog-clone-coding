@@ -4,43 +4,65 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import velog.sideProject.controller.dto.DraftPostDTO;
-import velog.sideProject.controller.dto.DraftPostWithTagDTO;
-import velog.sideProject.controller.dto.DraftTagDTO;
+import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.entity.drfatpost.DraftPost;
 import velog.sideProject.entity.drfatpost.DraftTag;
 import velog.sideProject.repository.draftpost.jpa.DraftPostRepository;
-import velog.sideProject.repository.draftpost.jpa.DraftTagRepository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MyPageService {
+public class  MyPageService {
 
     private final DraftPostRepository draftPostRepository;
 
-    /** select DraftPost List with member_id**/
-    public List<DraftPostWithTagDTO> getDraftPostWithId(Long member_id) {
-        List<DraftPostWithTagDTO> postInfoList = new ArrayList<>();
+    /** select DraftPostList with member_id**/
+    public List<SearchDraftPostDTO> getDraftPostListWithId(Long memberId) {
 
-        List<DraftPost> draftPosts = draftPostRepository.findByMember_MemberId(member_id);
+        List<DraftPost> draftPosts = draftPostRepository.findByMember_MemberId(memberId);
 
-        for (DraftPost draftPost : draftPosts) {
 
-            List<DraftTag> draftTagList = draftPostRepository.findTagStringsByPostId(draftPost.getDraftPostId());
+        // draftPost 마다 태그 리스트 조회후 DraftPostDTOList 생성
+        return draftPosts.stream()
+                .map(draftPost -> SearchDraftPostDTO.toDTO(draftPost, getDraftTagListWithDraftPostId(draftPost)))
+                .toList();
+    }
 
-            List<DraftTagDTO> draftPostDTOList = draftTagList.stream()
-                .map(DraftTagDTO::toDTO)
+    /** select DraftPost with post_id & member_id **/
+    public Optional<SearchDraftPostDTO> getDraftPostWithPostIdMemberId(Long postId, Long memberId) {
+
+        Optional<DraftPost> draftPost = draftPostRepository.findByDraftPostIdAndMember_MemberId(postId, memberId);
+
+        // DraftPostDTO에 DraftPost에 맞는 DraftTagList넣기
+        return draftPost.map(draftPostItem -> {
+            List<String> tagList = getDraftTagListWithDraftPostId(draftPostItem);
+            return SearchDraftPostDTO.toDTO(draftPostItem, tagList);
+        });
+    }
+
+    /**
+     * delete DraftPost with member_id & post_id
+     */
+    public Long deleteDraftPostWithPostIdMemberId(Long postId, Long memberId) {
+        return draftPostRepository.deleteByDraftPostIdAndMember_MemberId(postId, memberId);
+    }
+
+
+    // DraftPost에 맞는 tag 찾는 메서드
+    private List<String> getDraftTagListWithDraftPostId(DraftPost draftPost) {
+
+        // DraftPost에 맞는 DraftTagList 찾기
+        List<DraftTag> draftTagList = draftPost.getDraftTagList();
+
+        List<String> list = draftTagList.stream()
+                .map(DraftTag::getDraftTagString)
                 .toList();
 
-            postInfoList.add(new DraftPostWithTagDTO(DraftPostDTO.toDTO(draftPost), draftPostDTOList));
-        }
-
-        return postInfoList;
+        return list;
     }
 
 

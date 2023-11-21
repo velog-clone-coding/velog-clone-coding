@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import velog.sideProject.entity.Member;
 
 import java.time.LocalDateTime;
@@ -27,11 +29,13 @@ public class DraftPost {
     @Column(name = "draft_post_content",columnDefinition = "TEXT", nullable = false)
     private String draftPostContent;
 
+    @CreatedDate
+    @UpdateTimestamp
     @Column(name = "draft_post_modified_at", nullable = false)
     private LocalDateTime draftPostModifiedAt;
 
-    @OneToMany(mappedBy = "draftPost")
-    private List<DraftPost_DraftTag> draftPost_DraftTagList = new ArrayList<>();
+    @OneToMany(mappedBy = "draftPost", cascade = CascadeType.REMOVE)
+    private List<DraftTag> draftTagList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
@@ -39,10 +43,12 @@ public class DraftPost {
     private Member member;
 
     @Builder
-    public DraftPost(String draftPostTitle, String draftPostContent, LocalDateTime draftPostModifiedAt, Member member) {
+    public DraftPost(Long draftPostId, String draftPostTitle, String draftPostContent, LocalDateTime draftPostModifiedAt, List<DraftTag> draftTagList, Member member) {
+        this.draftPostId = draftPostId;
         this.draftPostTitle = draftPostTitle;
         this.draftPostContent = draftPostContent;
         this.draftPostModifiedAt = draftPostModifiedAt;
+        this.draftTagList = draftTagList;
         this.member = member;
     }
 }
