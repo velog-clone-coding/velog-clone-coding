@@ -18,7 +18,7 @@ import java.util.Optional;
 @NoArgsConstructor
 public class SearchDraftPostDTO {
 
-    private final String typeName = "draftPostDTO";
+    private final String typeName = "SearchDraftPostDTO";
     private Long memberId;
     private Long postId;
     private String title;

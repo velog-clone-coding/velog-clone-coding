@@ -1,15 +1,24 @@
 package velog.sideProject.entity.post;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import velog.sideProject.entity.File;
 import velog.sideProject.entity.Member;
+import velog.sideProject.entity.drfatpost.DraftTag;
 import velog.sideProject.entity.series.Series;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Post {
 
     @Id
@@ -50,10 +59,44 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "file_id")
-//    @Column(name = "thumbnail", nullable = false)
+//    @Column(name = "thumbnail")
     private File file;
 
     @ManyToOne
     @JoinColumn(name = "series_id")
     private Series series;
+
+    @Builder
+    public Post(Long postId, String postTitle, String postContent, String postDesc, int postCount, LocalDateTime createdAt, LocalDateTime modifiedAt, boolean postPublic, String postSlug, Member member, File file, Series series) {
+        this.postId = postId;
+        this.postTitle = postTitle;
+        this.postContent = postContent;
+        this.postDesc = postDesc;
+        this.postCount = postCount;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.postPublic = postPublic;
+        this.postSlug = postSlug;
+        this.member = member;
+        this.file = file;
+        this.series = series;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "postId=" + postId +
+                ", postTitle='" + postTitle + '\'' +
+                ", postContent='" + postContent + '\'' +
+                ", postDesc='" + postDesc + '\'' +
+                ", postCount=" + postCount +
+                ", createdAt=" + createdAt +
+                ", modifiedAt=" + modifiedAt +
+                ", postPublic=" + postPublic +
+                ", postSlug='" + postSlug + '\'' +
+                ", member=" + member.toString() +
+                ", file=" + file +
+                ", series=" + series +
+                '}';
+    }
 }

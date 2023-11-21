@@ -76,4 +76,18 @@ class WritePageServiceTest {
         Mockito.verify(draftTagRepository, Mockito.times(savedDraftTagList.size())).save(Mockito.any(DraftTag.class));
 
     }
+
+    @Test
+    @DisplayName("게시글 생성")
+    void createPost() {
+        /**
+         * title 필수
+         * content 필수
+         * desc 필수
+         * isPublic 필수
+         * urlSlug 필수
+         * seriesID 필수 아님
+         * tagList 필수 아님
+         */
+    }
 }
