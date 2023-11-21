@@ -1,24 +1,12 @@
 package velog.sideProject.repository.draftpost.jpa;
 
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-import velog.sideProject.entity.drfatpost.DraftPost;
-import velog.sideProject.entity.drfatpost.DraftTag;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
+import velog.sideProject.entity.drfatPost.DraftPost;
+import velog.sideProject.entity.drfatPost.DraftTag;
 
 @Transactional
 @SpringBootTest(classes = {DraftPostRepository.class})

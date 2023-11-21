@@ -3,7 +3,7 @@ package velog.sideProject.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class File {
+public class FileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

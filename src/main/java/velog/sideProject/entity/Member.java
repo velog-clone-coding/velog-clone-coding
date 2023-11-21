@@ -32,11 +32,11 @@ public class Member {
     private String introduction;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "modified_at", nullable = false)
+    @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
     @Column(name = "short_intro", length = 150)
@@ -72,7 +72,8 @@ public class Member {
      * **/
 
     @Builder
-    public Member(String memberEmail, String memberName, String velogTitle, Authority authority) {
+    public Member(Long memberId, String memberEmail, String memberName, String velogTitle, Authority authority) {
+        this.memberId = memberId;
         this.memberEmail = memberEmail;
         this.memberName = memberName;
         this.velogTitle = velogTitle;

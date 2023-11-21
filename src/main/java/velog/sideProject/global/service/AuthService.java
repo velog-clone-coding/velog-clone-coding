@@ -17,8 +17,6 @@ import velog.sideProject.repository.member.MemberRepository;
 import velog.sideProject.global.repository.RefreshTokenRepository;
 import velog.sideProject.service.EmailService;
 
-import java.util.UUID;
-
 
 @Service
 @RequiredArgsConstructor
@@ -28,30 +26,33 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final EmailService emailService;
     private final RefreshTokenRepository refreshTokenRepository;
+    private Long memberId;
 
     @Transactional
-    public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
+    public MemberResponseDto signup(MemberRequestDto memberRequestDto) throws Exception {
         if (memberRepository.existsByMemberEmail(memberRequestDto.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
+
+        // email 발송 기능
+        emailService.sendTokenLink(memberRequestDto.getEmail());
         Member member = memberRequestDto.toMember();
         return MemberResponseDto.of(memberRepository.save(member));
     }
 
     @Transactional
-    public TokenDto login(String email, MemberRequestDto memberRequestDto) throws Exception {
-        if (!email.equals(memberRequestDto.getEmail())){
-            throw new RuntimeException("이메일 주소와 아이디가 일치하지 않습니다.");
-        }
+    public TokenDto login(MemberRequestDto memberRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
 
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+
+        memberId = memberRepository.findIdByMemberEmail(memberRequestDto.getEmail());
+
+        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication, memberId);
 
         // 4. RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()
@@ -60,8 +61,6 @@ public class AuthService {
                 .build();
 
         refreshTokenRepository.save(refreshToken);
-        // email 발송 기능
-        emailService.sendTokenLink(email, tokenDto.getAccessToken());
         // 5. 토큰 발급
         return tokenDto;
     }
@@ -84,9 +83,9 @@ public class AuthService {
         if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
-
+        memberId = memberRepository.findIdByMemberEmail(authentication.getName());
         // 5. 새로운 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication, memberId);
 
         // 6. 저장소 정보 업데이트
         RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());

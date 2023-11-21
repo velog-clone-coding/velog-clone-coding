@@ -13,15 +13,13 @@ import velog.sideProject.config.initData.DraftPostInitData;
 import velog.sideProject.controller.dto.CreateDraftPostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.entity.Member;
-import velog.sideProject.entity.drfatpost.DraftPost;
-import velog.sideProject.entity.drfatpost.DraftTag;
+import velog.sideProject.entity.drfatPost.DraftPost;
+import velog.sideProject.entity.drfatPost.DraftTag;
 import velog.sideProject.repository.draftpost.jpa.DraftPostRepository;
 import velog.sideProject.repository.draftpost.jpa.DraftTagRepository;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest(classes = {WritePageService.class, DraftPostRepository.class, DraftTagRepository.class})

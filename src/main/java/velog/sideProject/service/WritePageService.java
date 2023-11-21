@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import velog.sideProject.controller.dto.CreateDraftPostDTO;
 import velog.sideProject.entity.Member;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
-import velog.sideProject.entity.drfatpost.DraftPost;
-import velog.sideProject.entity.drfatpost.DraftTag;
+import velog.sideProject.entity.drfatPost.DraftPost;
+import velog.sideProject.entity.drfatPost.DraftTag;
 import velog.sideProject.repository.draftpost.jpa.DraftPostRepository;
 import velog.sideProject.repository.draftpost.jpa.DraftTagRepository;
 

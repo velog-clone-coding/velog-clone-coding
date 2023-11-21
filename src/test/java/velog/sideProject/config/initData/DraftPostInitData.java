@@ -4,8 +4,8 @@ import lombok.Getter;
 import velog.sideProject.controller.dto.CreateDraftPostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.entity.Member;
-import velog.sideProject.entity.drfatpost.DraftPost;
-import velog.sideProject.entity.drfatpost.DraftTag;
+import velog.sideProject.entity.drfatPost.DraftPost;
+import velog.sideProject.entity.drfatPost.DraftTag;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
