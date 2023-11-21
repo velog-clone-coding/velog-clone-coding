@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import velog.sideProject.entity.drfatpost.DraftTag;
+import velog.sideProject.entity.drfatPost.DraftTag;
 
 @Getter
 @EqualsAndHashCode

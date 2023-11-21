@@ -1,12 +1,9 @@
-package velog.sideProject.entity.drfatpost;
+package velog.sideProject.entity.drfatPost;
 
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import velog.sideProject.entity.post.Tag;
-
-import java.util.List;
 
 
 @Entity

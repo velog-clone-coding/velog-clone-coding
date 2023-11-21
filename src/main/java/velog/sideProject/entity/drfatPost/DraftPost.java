@@ -1,8 +1,7 @@
-package velog.sideProject.entity.drfatpost;
+package velog.sideProject.entity.drfatPost;
 
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;

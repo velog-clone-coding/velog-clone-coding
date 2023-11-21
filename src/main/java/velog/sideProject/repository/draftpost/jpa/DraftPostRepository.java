@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import velog.sideProject.entity.drfatpost.DraftPost;
-import velog.sideProject.entity.drfatpost.DraftTag;
+import velog.sideProject.entity.drfatPost.DraftPost;
+import velog.sideProject.entity.drfatPost.DraftTag;
 
 import java.util.List;
 import java.util.Optional;
