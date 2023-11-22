@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface SeriesRepository extends JpaRepository<Series, Long> {
 
-    Optional<Series> findBySeriesId(Long seriesId);
+    Optional<Series> findBySeriesIdAndMember_MemberId(Long seriesId, Long memberId);
 }

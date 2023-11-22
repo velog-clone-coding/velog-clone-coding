@@ -81,6 +81,17 @@ public class Post {
         this.series = series;
     }
 
+    /** post urlSlug, postDesc 변경될 수 있으므로 settr 필요
+     * WritePageService에서 사용
+     * **/
+    public void setPostSlug(String postSlug) {
+        this.postSlug = postSlug;
+    }
+
+    public void setPostDesc(String postDesc) {
+        this.postDesc = postDesc;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
