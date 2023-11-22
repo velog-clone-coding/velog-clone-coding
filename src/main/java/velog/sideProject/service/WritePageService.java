@@ -59,8 +59,7 @@ public class WritePageService {
 
     }
 
-    /** insert Post, Tag, Post_Tag with member_id, createPostDTO
-     * TODO: 코드 개선 필요해 보임 **/
+    /** insert Post, Tag, Post_Tag with member_id, createPostDTO **/
     public Optional<SearchPostDTO> createPost(CreatePostDTO createPostDTO, Long memberId) {
         log.info("Service createPost request");
 
@@ -69,11 +68,17 @@ public class WritePageService {
         // 썸네일 조회
         Optional<File> thumbnailFile = fileRepository.findByFileId(createPostDTO.getThumbnailId());
         // 시리즈 조회
-        Optional<Series> series = seriesRepository.findBySeriesId(createPostDTO.getSeriesId());
+        Optional<Series> series = seriesRepository.findBySeriesIdAndMember_MemberId(createPostDTO.getSeriesId(), memberId);
 
         // 태그, 게시글 정보 분리
         Post post = createPostDTO.toPostEntity(member.get(), thumbnailFile.orElse(null), series.orElse(null));
         List<Tag> tagList = createPostDTO.toTagEntity();
+
+        // urlSlug 확인
+        post.setPostSlug(createUrlSlugCheck(post.getPostSlug()));
+
+        // desc 확인
+        post.setPostDesc(createDescCheck(post.getPostDesc()));
 
         // 게시글 저장
         Post savedPost = postRepository.save(post);
@@ -105,5 +110,20 @@ public class WritePageService {
         // 생성된 게시글 정보 리턴
         SearchPostDTO searchPostDTO = SearchPostDTO.toDTO(savedPost, tagStringList);
         return Optional.ofNullable(searchPostDTO);
+    }
+
+    // desc값이 비면 내용에 txt로 변경 /** TODO : 이후 개선 **/
+    private String createDescCheck(String postDesc) {
+
+        return postDesc;
+    }
+
+    // urlSlug 확인 후 null 또는 size가 0이라면 게시글 제목으로
+    // 게시글 제목이 겹칠 경우 -랜덤숫자로 변경
+    /** TODO : 이후 개선 **/
+    private String createUrlSlugCheck(String urlSlug) {
+
+
+        return urlSlug;
     }
 }
