@@ -120,7 +120,7 @@ class WritePageServiceTest {
                 .willReturn(returnFile);
         // 시리즈 조회
         Optional<Series> returnSeries = Optional.ofNullable(Series.builder().seriesId(3L).build());
-        BDDMockito.given(seriesRepository.findBySeriesId(createPostDTO.getSeriesId()))
+        BDDMockito.given(seriesRepository.findBySeriesIdAndMember_MemberId(createPostDTO.getSeriesId(), memberId))
                 .willReturn(returnSeries);
 
         // 태그, 게시글 정보 분리
