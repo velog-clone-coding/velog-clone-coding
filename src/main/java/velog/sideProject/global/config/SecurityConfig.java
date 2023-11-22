@@ -89,6 +89,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/email/mailConfirm").permitAll()
                                 .requestMatchers("/api/writePage/**").permitAll()
                                 .requestMatchers("/api/myPage/**").permitAll()
+                                .requestMatchers("/api/file/upload/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
