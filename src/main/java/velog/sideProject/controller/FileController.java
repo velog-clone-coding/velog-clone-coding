@@ -10,17 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import velog.sideProject.controller.dto.FileDTO;
-import velog.sideProject.controller.dto.SearchDraftPostDTO;
-
-import java.util.List;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
-public class CommonController {
+@RequestMapping("/api/file")
+public class FileController {
 
-    @GetMapping("/file/upload")
+    @GetMapping("/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
         // 파일이 비어있을 때
         if (file.isEmpty()) {
@@ -35,4 +32,5 @@ public class CommonController {
 
         return ResponseEntity.ok(fileDTO);
     }
+
 }

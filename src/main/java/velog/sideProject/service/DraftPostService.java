@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import velog.sideProject.controller.dto.CreateDraftPostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
+import velog.sideProject.entity.Member;
 import velog.sideProject.entity.drfatPost.DraftPost;
 import velog.sideProject.entity.drfatPost.DraftTag;
 import velog.sideProject.repository.draftpost.jpa.DraftPostRepository;
+import velog.sideProject.repository.draftpost.jpa.DraftTagRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +19,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class  MyPageService {
+public class DraftPostService {
 
     private final DraftPostRepository draftPostRepository;
+    private final DraftTagRepository draftTagRepository;
 
     /** select DraftPostList with member_id**/
     public List<SearchDraftPostDTO> getDraftPostListWithId(Long memberId) {
@@ -44,6 +48,22 @@ public class  MyPageService {
         });
     }
 
+    /** insert DraftPost with member_id, DraftPostDTO **/
+    public Optional<SearchDraftPostDTO> createDraftPost(CreateDraftPostDTO draftPostDTO, Long memberId) {
+        log.info("Service createDraftPost request");
+        DraftPost draftPost = draftPostDTO.toDraftPostEntity(Member.builder().memberId(memberId).build());
+        List<DraftTag> draftTagList = draftPostDTO.toDraftTagEntity(draftPost);
+
+        DraftPost savedDraftPost = draftPostRepository.save(draftPost);
+        List<String> savedDraftTagList = draftTagList.stream()
+                .map(draftTagRepository::save)
+                .map(DraftTag::getDraftTagString).toList();
+
+        return Optional.ofNullable(SearchDraftPostDTO.toDTO(savedDraftPost, savedDraftTagList));
+
+    }
+
+
     /**
      * delete DraftPost with member_id & post_id
      */
@@ -58,11 +78,9 @@ public class  MyPageService {
         // DraftPost에 맞는 DraftTagList 찾기
         List<DraftTag> draftTagList = draftPost.getDraftTagList();
 
-        List<String> list = draftTagList.stream()
+        return draftTagList.stream()
                 .map(DraftTag::getDraftTagString)
                 .toList();
-
-        return list;
     }
 
 

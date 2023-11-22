@@ -33,10 +33,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class WritePageService {
+public class PostService {
 
-    private final DraftPostRepository draftPostRepository;
-    private final DraftTagRepository draftTagRepository;
+
     private final PostRepository postRepository;
     private final TagRepository tagRepository;
     private final Post_TagRepository postTagRepository;
@@ -44,20 +43,6 @@ public class WritePageService {
     private final FileRepository fileRepository;
     private final SeriesRepository seriesRepository;
 
-    /** insert DraftPost with member_id, DraftPostDTO **/
-    public Optional<SearchDraftPostDTO> createDraftPost(CreateDraftPostDTO draftPostDTO, Long memberId) {
-        log.info("Service createDraftPost request");
-        DraftPost draftPost = draftPostDTO.toDraftPostEntity(Member.builder().memberId(memberId).build());
-        List<DraftTag> draftTagList = draftPostDTO.toDraftTagEntity(draftPost);
-
-        DraftPost savedDraftPost = draftPostRepository.save(draftPost);
-        List<String> savedDraftTagList = draftTagList.stream()
-                .map(draftTagRepository::save)
-                .map(DraftTag::getDraftTagString).toList();
-
-        return Optional.ofNullable(SearchDraftPostDTO.toDTO(savedDraftPost, savedDraftTagList));
-
-    }
 
     /** insert Post, Tag, Post_Tag with member_id, createPostDTO **/
     public Optional<SearchPostDTO> createPost(CreatePostDTO createPostDTO, Long memberId) {
@@ -111,6 +96,7 @@ public class WritePageService {
         SearchPostDTO searchPostDTO = SearchPostDTO.toDTO(savedPost, tagStringList);
         return Optional.ofNullable(searchPostDTO);
     }
+
 
     // desc값이 비면 내용에 txt로 변경 /** TODO : 이후 개선 **/
     private String createDescCheck(String postDesc) {

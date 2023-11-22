@@ -87,9 +87,9 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/api/email/mailConfirm").permitAll()
-                                .requestMatchers("/api/writePage/**").permitAll()
-                                .requestMatchers("/api/myPage/**").permitAll()
-                                .requestMatchers("/api/file/upload/**").permitAll()
+                                .requestMatchers("/api/post/**").permitAll()
+                                .requestMatchers("/api/draftPost/**").permitAll()
+                                .requestMatchers("/api/file/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용

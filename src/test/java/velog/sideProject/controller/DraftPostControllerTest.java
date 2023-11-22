@@ -7,12 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,11 +21,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import velog.sideProject.common.JsonMethod;
 import velog.sideProject.common.initData.DraftPostInitData;
+import velog.sideProject.controller.dto.CreateDraftPostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
-import velog.sideProject.service.MyPageService;
+import velog.sideProject.service.DraftPostService;
 
 
 import java.util.List;
@@ -34,14 +38,16 @@ import static org.mockito.BDDMockito.given;
 
 @Slf4j
 @AutoConfigureMockMvc(addFilters = false)
-@WebMvcTest(MyPageController.class)
-class MyPageControllerTest {
+@WebMvcTest(DraftPostController.class)
+class DraftPostControllerTest {
+
+    private final String api = "/api/draftPost/";
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    MyPageService myPageService;
+    DraftPostService draftPostService;
 
     DraftPostInitData draftPostInitData = new DraftPostInitData();
 
@@ -52,12 +58,12 @@ class MyPageControllerTest {
         //given
         List<SearchDraftPostDTO> searchDraftPostDTOList = draftPostInitData.getSearchDraftPostDTOList();
 
-        given(myPageService.getDraftPostListWithId(1L))
+        given(draftPostService.getDraftPostListWithId(1L))
                 .willReturn(searchDraftPostDTOList);
 
         // andExpect
         MvcResult result = mockMvc.perform(
-                        get("/api/myPage/saves"))
+                        get(api + "saves"))
                 .andExpect(status().isOk())
 //                .andDo(print())
                 .andReturn();
@@ -75,7 +81,7 @@ class MyPageControllerTest {
 
 
 
-        verify(myPageService).getDraftPostListWithId(1L);
+        verify(draftPostService).getDraftPostListWithId(1L);
     }
     //http://localhost:8080/api/myPage/write?postId=? (get)
     @Test
@@ -84,12 +90,12 @@ class MyPageControllerTest {
         //given
         SearchDraftPostDTO searchDraftPostDTO = draftPostInitData.getSearchDraftPostDTO();
 
-        given(myPageService.getDraftPostWithPostIdMemberId(1L, 1L))
+        given(draftPostService.getDraftPostWithPostIdMemberId(1L, 1L))
                 .willReturn(Optional.ofNullable(searchDraftPostDTO));
 
         // andExpect
         MvcResult result = mockMvc.perform(
-                        get("/api/myPage/write").param("postId", "1"))
+                        get(api + "write").param("postId", "1"))
                 .andExpect(status().isOk())
 //                .andDo(print())
                 .andReturn();
@@ -107,7 +113,36 @@ class MyPageControllerTest {
 
 
 
-        verify(myPageService).getDraftPostWithPostIdMemberId(1L, 1L);
+        verify(draftPostService).getDraftPostWithPostIdMemberId(1L, 1L);
+    }
+
+    //http://localhost:8080/api/writePage/write/draft (post)
+    @Test
+    @DisplayName("임시글 생성")
+    void createDraftPost() throws Exception {
+        //given
+        CreateDraftPostDTO createDraftPostDTO = draftPostInitData.getCreateDraftPostDTO();
+        SearchDraftPostDTO expectResult = draftPostInitData.getSearchDraftPostDTO();
+
+        BDDMockito.given(draftPostService.createDraftPost(createDraftPostDTO, 1L))
+                .willReturn(Optional.ofNullable(expectResult));
+
+        //andExpect
+        MvcResult result = mockMvc.perform(
+                        post(api + "write")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JsonMethod.objectToJson(createDraftPostDTO)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // 서버 응답값
+        SearchDraftPostDTO responseResult = JsonMethod.jsonToObject(result.getResponse().getContentAsString(), SearchDraftPostDTO.class);
+
+        // 비교
+        Assertions.assertThat(expectResult).isEqualTo(responseResult);
+
+        //verify
+        Mockito.verify(draftPostService).createDraftPost(createDraftPostDTO, 1L);
     }
 
     //http://localhost:8080/api/myPage/write?postId=? (delete)
@@ -117,14 +152,14 @@ class MyPageControllerTest {
         //given
         SearchDraftPostDTO searchDraftPostDTO = draftPostInitData.getSearchDraftPostDTO();
 
-        given(myPageService.deleteDraftPostWithPostIdMemberId(1L, 1L)).willReturn(1L);
+        given(draftPostService.deleteDraftPostWithPostIdMemberId(1L, 1L)).willReturn(1L);
 
         // andExpect
         mockMvc.perform(
-                        delete("/api/myPage/write").param("postId", "1"))
+                        delete(api + "write").param("postId", "1"))
                 .andExpect(status().isOk());
 
-        verify(myPageService).deleteDraftPostWithPostIdMemberId(1L, 1L);
+        verify(draftPostService).deleteDraftPostWithPostIdMemberId(1L, 1L);
     }
 
 }

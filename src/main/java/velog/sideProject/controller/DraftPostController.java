@@ -3,9 +3,10 @@ package velog.sideProject.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import velog.sideProject.controller.dto.CreateDraftPostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.exception.exception.VelogNotFoundException;
-import velog.sideProject.service.MyPageService;
+import velog.sideProject.service.DraftPostService;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +14,10 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/myPage")
-public class MyPageController {
+@RequestMapping("/api/draftPost")
+public class DraftPostController {
 
-    private final MyPageService myPageService;
+    private final DraftPostService draftPostService;
 
     /**
      * TODO: jwt에서 멤버 정보 가져오는걸로 변경 필요
@@ -30,7 +31,7 @@ public class MyPageController {
     public List<SearchDraftPostDTO> getDraftPostList() {
         log.info("getDraftPostList request");
 
-        return myPageService.getDraftPostListWithId(memberId);
+        return draftPostService.getDraftPostListWithId(memberId);
 
     }
 
@@ -40,7 +41,7 @@ public class MyPageController {
     @GetMapping("/write")
     public SearchDraftPostDTO getDraftPost(@RequestParam Long postId) {
         log.info("getDraftPost request");
-        Optional<SearchDraftPostDTO> draftPostDTO = myPageService.getDraftPostWithPostIdMemberId(postId, memberId);
+        Optional<SearchDraftPostDTO> draftPostDTO = draftPostService.getDraftPostWithPostIdMemberId(postId, memberId);
 
         return draftPostDTO.orElseThrow(() -> new VelogNotFoundException("DraftPost not found with postID: " + postId + ", memberId: " + memberId));
 
@@ -53,8 +54,18 @@ public class MyPageController {
     public void deleteDraftPost(@RequestParam Long postId) {
         log.info("deleteDraftPost request");
 
-        if (1 != myPageService.deleteDraftPostWithPostIdMemberId(postId, memberId)) {
+        if (1 != draftPostService.deleteDraftPostWithPostIdMemberId(postId, memberId)) {
             throw new VelogNotFoundException("DraftPost not found with postID: " + postId + ", memberId: " + memberId);
         }
+    }
+
+    /** insert DraftPost with member_id **/
+    @PostMapping("/write")
+    public SearchDraftPostDTO createDraftPost(@RequestBody CreateDraftPostDTO createDraftPostDTO) {
+        log.info("createDraftPost request");
+
+        Optional<SearchDraftPostDTO> draftPost = draftPostService.createDraftPost(createDraftPostDTO, memberId);
+
+        return draftPost.orElseThrow(() -> new RuntimeException("서버 에러"));
     }
 }

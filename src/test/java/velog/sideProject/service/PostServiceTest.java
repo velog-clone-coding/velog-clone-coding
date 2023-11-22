@@ -37,10 +37,10 @@ import java.util.Optional;
 @Slf4j
 @SpringBootTest
 @ComponentScan(basePackages = "velog.sideProject.repository")
-class WritePageServiceTest {
+class PostServiceTest {
 
     @Autowired
-    WritePageService writePageService;
+    PostService postService;
     @MockBean
     DraftPostRepository draftPostRepository;
     @MockBean
@@ -61,46 +61,7 @@ class WritePageServiceTest {
 
     DraftPostInitData draftPostInitData = new DraftPostInitData();
 
-    @Test
-    @DisplayName("임시글 생성")
-    void createDraftPost() {
-        // 임시글 생성 파람
-        CreateDraftPostDTO createDraftPostDTO = draftPostInitData.getCreateDraftPostDTO();
-        DraftPost createDraftPost = createDraftPostDTO.toDraftPostEntity(Member.builder().memberId(1L).build());
 
-        //임시글 생성 리턴값
-        DraftPost savedDraftPost = draftPostInitData.getDraftPost();
-
-        //given
-        BDDMockito.given(draftPostRepository.save(Mockito.any(DraftPost.class)))
-                .willAnswer(invocation -> {
-                    return invocation.getArgument(0);
-                });
-
-        BDDMockito.given(draftTagRepository.save(Mockito.any(DraftTag.class)))
-                .willAnswer(invocation -> {
-                    return invocation.getArgument(0); // 들어온 DraftTag를 다시 보내기
-                });
-
-        //when
-        Optional<SearchDraftPostDTO> result = writePageService.createDraftPost(createDraftPostDTO, 1L);
-
-        // expect
-        List<String> savedDraftTagList = createDraftPostDTO.getTagList();
-        SearchDraftPostDTO expectResult = SearchDraftPostDTO.toDTO(savedDraftPost, savedDraftTagList);
-
-//        log.info("expectResult = {}", expectResult.toString());
-//        log.info("result = {}", result.toString());
-        Assertions.assertThat(expectResult.getMemberId()).isEqualTo(result.get().getMemberId());
-        Assertions.assertThat(expectResult.getTitle()).isEqualTo(result.get().getTitle());
-        Assertions.assertThat(expectResult.getContent()).isEqualTo(result.get().getContent());
-        Assertions.assertThat(expectResult.getTagList()).isEqualTo(result.get().getTagList());
-
-        //verify
-        Mockito.verify(draftPostRepository).save(Mockito.any(DraftPost.class));
-        Mockito.verify(draftTagRepository, Mockito.times(savedDraftTagList.size())).save(Mockito.any(DraftTag.class));
-
-    }
 
     /** TODO: 테스트 코드 작성 필요 **/
     @Test
