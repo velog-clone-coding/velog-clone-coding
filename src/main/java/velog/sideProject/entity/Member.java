@@ -66,10 +66,11 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    /**
-     * 테스트 용
-     * TODO: jwt로 유저 식별 이후 삭제 필요
-     * **/
+    @ManyToOne
+    @JoinColumn(name = "file_id", nullable = false)
+    //@Column(name = "image_id", nullable = false)
+    private File file;
+
 
     @Builder
     public Member(Long memberId, String memberEmail, String memberName, String velogTitle, Authority authority) {

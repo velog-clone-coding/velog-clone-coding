@@ -3,7 +3,7 @@ package velog.sideProject.entity.post;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
-import velog.sideProject.entity.FileEntity;
+import velog.sideProject.entity.File;
 import velog.sideProject.entity.Member;
 import velog.sideProject.entity.series.Series;
 
@@ -51,7 +51,7 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "file_id")
 //    @Column(name = "thumbnail", nullable = false)
-    private FileEntity file;
+    private File file;
 
     @ManyToOne
     @JoinColumn(name = "series_id")
