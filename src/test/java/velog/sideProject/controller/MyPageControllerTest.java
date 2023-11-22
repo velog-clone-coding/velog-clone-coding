@@ -22,7 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import velog.sideProject.config.initData.DraftPostInitData;
+import velog.sideProject.common.initData.DraftPostInitData;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
 import velog.sideProject.service.MyPageService;
 

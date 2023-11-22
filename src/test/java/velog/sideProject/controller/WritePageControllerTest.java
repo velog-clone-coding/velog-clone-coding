@@ -13,10 +13,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import velog.sideProject.config.JsonMethod;
-import velog.sideProject.config.initData.DraftPostInitData;
+import velog.sideProject.common.JsonMethod;
+import velog.sideProject.common.initData.DraftPostInitData;
 import velog.sideProject.controller.dto.CreateDraftPostDTO;
+import velog.sideProject.controller.dto.CreatePostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
+import velog.sideProject.controller.dto.SearchPostDTO;
 import velog.sideProject.service.WritePageService;
 
 import java.util.Optional;
@@ -64,5 +66,33 @@ class WritePageControllerTest {
 
         //verify
         Mockito.verify(writePageService).createDraftPost(createDraftPostDTO, 1L);
+    }
+
+    @Test
+    @DisplayName("게시글 생성")
+    void createPost() throws Exception {
+        //given
+        Long memberId = 1L;
+        CreatePostDTO createPostDTO = CreatePostDTO.builder().build();
+        SearchPostDTO expectResult = SearchPostDTO.builder().postId(1L).build();
+
+        BDDMockito.given(writePageService.createPost(createPostDTO, memberId))
+                .willReturn(Optional.ofNullable(expectResult));
+
+        MvcResult result = mockMvc.perform(
+                        post("/api/writePage/write")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JsonMethod.objectToJson(createPostDTO)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // 서버 응답값
+        SearchPostDTO responseResult = JsonMethod.jsonToObject(result.getResponse().getContentAsString(), SearchPostDTO.class);
+
+        // 비교
+        Assertions.assertThat(expectResult).isEqualTo(responseResult);
+
+        //verify
+        Mockito.verify(writePageService).createPost(createPostDTO, memberId);
     }
 }

@@ -80,4 +80,27 @@ public class Member {
         this.velogTitle = velogTitle;
         this.authority = authority;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberId=" + memberId +
+                ", memberName='" + memberName + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", velogTitle='" + velogTitle + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", createdAt=" + createdAt +
+                ", modifiedAt=" + modifiedAt +
+                ", shortIntro='" + shortIntro + '\'' +
+                ", socialEmail='" + socialEmail + '\'' +
+                ", socialGithub='" + socialGithub + '\'' +
+                ", socialTwitter='" + socialTwitter + '\'' +
+                ", socialFacebook='" + socialFacebook + '\'' +
+                ", socialWebsite='" + socialWebsite + '\'' +
+                ", replyAlert=" + replyAlert +
+                ", updateAlert=" + updateAlert +
+                ", authority=" + authority +
+                ", file=" + file +
+                '}';
+    }
 }

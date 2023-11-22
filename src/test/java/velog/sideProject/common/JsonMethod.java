@@ -1,4 +1,4 @@
-package velog.sideProject.config;
+package velog.sideProject.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

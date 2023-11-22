@@ -1,8 +1,10 @@
-package velog.sideProject.config.initData;
+package velog.sideProject.common.initData;
 
 import lombok.Getter;
 import velog.sideProject.controller.dto.CreateDraftPostDTO;
+import velog.sideProject.controller.dto.CreatePostDTO;
 import velog.sideProject.controller.dto.SearchDraftPostDTO;
+import velog.sideProject.controller.dto.SearchPostDTO;
 import velog.sideProject.entity.Member;
 import velog.sideProject.entity.drfatPost.DraftPost;
 import velog.sideProject.entity.drfatPost.DraftTag;
@@ -27,6 +29,7 @@ public class DraftPostInitData {
     private List<SearchDraftPostDTO> searchDraftPostDTOList = new ArrayList<>();
     private List<DraftTag> draftTagList = new ArrayList<>();
 
+
     private CreateDraftPostDTO createDraftPostDTO = CreateDraftPostDTO.builder()
             .content("content")
             .title("title")
@@ -50,6 +53,18 @@ public class DraftPostInitData {
             .content("content")
             .agoDate(LocalDateTime.now())
             .tagList(List.of("tag1", "tag2")).build();
+
+    private CreatePostDTO createPostDTO = CreatePostDTO.builder()
+            .title("title")
+            .content("content")
+            .desc("desc")
+            .urlSlug("urlSlug")
+            .isPublic(true)
+            .thumbnailId(1L)
+            .seriesId(1L)
+            .tagList(List.of("tag1", "tag2"))
+            .build();
+
 
     private void initSearchDraftPostList() {
         draftPostList.add(DraftPost.builder()

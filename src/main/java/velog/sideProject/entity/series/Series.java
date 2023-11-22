@@ -1,6 +1,8 @@
 package velog.sideProject.entity.series;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import velog.sideProject.entity.Member;
@@ -8,6 +10,7 @@ import velog.sideProject.entity.Member;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class Series {
 
     @Id
@@ -30,4 +33,13 @@ public class Series {
 //    @Column(name = "member_id", nullable = false)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @Builder
+    public Series(Long seriesId, String series, LocalDateTime createdAt, LocalDateTime modifiedAt, Member member) {
+        this.seriesId = seriesId;
+        this.series = series;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.member = member;
+    }
 }
