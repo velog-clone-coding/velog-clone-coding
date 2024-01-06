@@ -18,6 +18,8 @@ public class SearchSeriesDTO {
     private String seriesName;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private String thumbnail;
+    private int postCount;
 
     public static SearchSeriesDTO toDTO(Series series) {
         return SearchSeriesDTO.builder()
@@ -25,14 +27,17 @@ public class SearchSeriesDTO {
                 .seriesName(series.getSeries())
                 .createdAt(series.getCreatedAt())
                 .modifiedAt(series.getModifiedAt())
+                .postCount(series.getPostList().size())
                 .build();
     }
 
     @Builder
-    public SearchSeriesDTO(Long seriesId, String seriesName, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public SearchSeriesDTO(Long seriesId, String seriesName, LocalDateTime createdAt, LocalDateTime modifiedAt, String thumbnail, int postCount) {
         this.seriesId = seriesId;
         this.seriesName = seriesName;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+        this.thumbnail = thumbnail;
+        this.postCount = postCount;
     }
 }

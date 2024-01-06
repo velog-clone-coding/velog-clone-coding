@@ -3,12 +3,18 @@ package velog.sideProject.entity.series;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import velog.sideProject.entity.Member;
+import velog.sideProject.entity.drfatPost.DraftTag;
+import velog.sideProject.entity.post.Post;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@NoArgsConstructor
 @Entity
 @Getter
 public class Series {
@@ -33,6 +39,9 @@ public class Series {
 //    @Column(name = "member_id", nullable = false)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @OneToMany(mappedBy = "series", cascade = CascadeType.REMOVE)
+    private List<Post> postList = new ArrayList<>();
 
     @Builder
     public Series(Long seriesId, String series, LocalDateTime createdAt, LocalDateTime modifiedAt, Member member) {
